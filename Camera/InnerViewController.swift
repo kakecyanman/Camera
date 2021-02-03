@@ -1,17 +1,17 @@
 //
-//  ViewController.swift
+//  InnerViewController.swift
 //  Camera
 //
-//  Created by 阿迦井翔 on 2021/01/06.
+//  Created by 阿迦井翔 on 2021/01/23.
 //
 
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class InnerViewController: UIViewController {
     
-    var count = 0
-    var timer: Timer?
+    var colorcount = 0
+
     // デバイスからの入力と出力を管理するオブジェクトの作成
     var captureSession = AVCaptureSession()
     // カメラデバイスそのものを管理するオブジェクトの作成
@@ -27,9 +27,7 @@ class ViewController: UIViewController {
     var cameraPreviewLayer : AVCaptureVideoPreviewLayer?
     // シャッターボタン
     @IBOutlet weak var cameraButton: UIButton!
-    // セグメントコントロール
-    @IBOutlet weak var SegmentedControl: UISegmentedControl!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptureSession()
@@ -38,94 +36,114 @@ class ViewController: UIViewController {
         setupPreviewLayer()
         captureSession.startRunning()
         styleCaptureButton()
-        
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     // シャッターボタンが押された時のアクション
     @IBAction func cameraButton_TouchUpInside(_ sender: Any) {
-        count = count + 1
         
-        if count == 1 {
-            
+        if colorcount == 0 {
             shatter()
-            print(count)
-            count = 0
-            
-        } else if count == 6 {
-            
-            self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(ViewController.shatter), userInfo: nil, repeats: true)
-            print(count)
-            
-        } else if count == 11 {
-            
-            self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(ViewController.shatter), userInfo: nil, repeats: true)
-            print(count)
-            
-        } else {
-            
-            self.timer?.invalidate()
-            count = 0
-            print(count)
-            
+        } else if colorcount == 5 {
+            performSegue(withIdentifier: "toRed", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.shatter()
+            }
+        } else if colorcount == 10 {
+            performSegue(withIdentifier: "toBlue", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.shatter()
+            }
+        } else if colorcount == 15 {
+            performSegue(withIdentifier: "toYellow", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.shatter()
+            }
+        } else if colorcount == 20 {
+            performSegue(withIdentifier: "toGreen", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.shatter()
+            }
+        } else if colorcount == 25 {
+            performSegue(withIdentifier: "toPink", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.shatter()
+            }
+        } else if colorcount == 30 {
+            performSegue(withIdentifier: "toPurple", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.shatter()
+            }
         }
         
     }
-    // 写真を撮る
+    
     @objc func shatter() {
-        
         let settings = AVCapturePhotoSettings()
         // フラッシュの設定
         settings.flashMode = .auto
         // カメラの手ぶれ補正
         settings.isAutoStillImageStabilizationEnabled = true
         // 撮影された画像をdelegateメソッドで処理
-        self.photoOutput?.capturePhoto(with: settings, delegate: self as! AVCapturePhotoCaptureDelegate)
-        
+            self.photoOutput?.capturePhoto(with: settings, delegate: self as! AVCapturePhotoCaptureDelegate)
     }
-    
-    // セグメントコントロール
-    @IBAction func segmented(_ sender: UISegmentedControl) {
+
+    @IBAction func colorSegmented(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        //単写
+        
         case 0:
-            count = 0
-            print(count)
-        //3秒おき
+            colorcount = 0
+            print(colorcount)
+        //red
         case 1:
-            count = 5
-            print(count)
-        //5秒おき
+            colorcount = 5
+            print(colorcount)
+        //blue
         case 2:
-            count = 10
-            print(count)
+            colorcount = 10
+            print(colorcount)
+        //yellow
+        case 3:
+            colorcount = 15
+            print(colorcount)
+        //green
+        case 4:
+            colorcount = 20
+            print(colorcount)
+        //pink
+        case 5:
+            colorcount = 25
+            print(colorcount)
+        //purple
+        case 6:
+            colorcount = 30
+            print(colorcount)
             
         default:
-            count = 0
-            print(count)
+            colorcount = 0
+            print(colorcount)
         }
     }
 }
 
 //MARK: AVCapturePhotoCaptureDelegateデリゲートメソッド
-extension ViewController: AVCapturePhotoCaptureDelegate{
+extension InnerViewController: AVCapturePhotoCaptureDelegate{
     // 撮影した画像データが生成されたときに呼び出されるデリゲートメソッド
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {
             // Data型をUIImageオブジェクトに変換
             let uiImage = UIImage(data: imageData)
-            //写真ライブラリに画像を保存
             UIImageWriteToSavedPhotosAlbum(uiImage!, nil,nil,nil)
         }
     }
 }
 
 //MARK: カメラ設定メソッド
-extension ViewController{
+extension InnerViewController{
     // カメラの画質の設定
     func setupCaptureSession() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
@@ -146,8 +164,13 @@ extension ViewController{
             }
         }
         // 起動時のカメラを設定
-        currentDevice = mainCamera
+        currentDevice = innerCamera
     }
+    
+    @IBAction func change() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 
     // 入出力データの設定
     func setupInputOutput() {
@@ -165,7 +188,7 @@ extension ViewController{
             print(error)
         }
     }
-    
+
     // カメラのプレビューを表示するレイヤの設定
     func setupPreviewLayer() {
         // 指定したAVCaptureSessionでプレビューレイヤを初期化
@@ -174,11 +197,11 @@ extension ViewController{
         self.cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         // プレビューレイヤの表示の向きを設定
         self.cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        
+
         self.cameraPreviewLayer?.frame = view.frame
         self.view.layer.insertSublayer(self.cameraPreviewLayer!, at: 0)
     }
-    
+
     // ボタンのスタイルを設定
     func styleCaptureButton() {
         cameraButton.layer.borderColor = UIColor.white.cgColor
@@ -186,7 +209,5 @@ extension ViewController{
         cameraButton.clipsToBounds = true
         cameraButton.layer.cornerRadius = min(cameraButton.frame.width, cameraButton.frame.height) / 2
     }
-    
-    
-}
 
+}

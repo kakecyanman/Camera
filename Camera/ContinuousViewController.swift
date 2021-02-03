@@ -1,16 +1,18 @@
 //
-//  ViewController.swift
+//  ContinuousViewController.swift
 //  Camera
 //
-//  Created by 阿迦井翔 on 2021/01/06.
+//  Created by 阿迦井翔 on 2021/01/23.
 //
 
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ContinuousViewController: UIViewController {
     
+    var imageArray = [UIImage]()
     var count = 0
+    var capturecount = 0
     var timer: Timer?
     // デバイスからの入力と出力を管理するオブジェクトの作成
     var captureSession = AVCaptureSession()
@@ -27,8 +29,6 @@ class ViewController: UIViewController {
     var cameraPreviewLayer : AVCaptureVideoPreviewLayer?
     // シャッターボタン
     @IBOutlet weak var cameraButton: UIButton!
-    // セグメントコントロール
-    @IBOutlet weak var SegmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,9 @@ class ViewController: UIViewController {
         captureSession.startRunning()
         styleCaptureButton()
         
+        // 画面タップでピントをあわせる
+        //                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.tappedScreen(_:)))
+        //                let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(ViewController.pinchedGesture(_:)))
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,33 +54,17 @@ class ViewController: UIViewController {
         count = count + 1
         
         if count == 1 {
-            
-            shatter()
+            self.timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(ViewController.shatter), userInfo: nil, repeats: true)
             print(count)
-            count = 0
-            
-        } else if count == 6 {
-            
-            self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(ViewController.shatter), userInfo: nil, repeats: true)
-            print(count)
-            
-        } else if count == 11 {
-            
-            self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(ViewController.shatter), userInfo: nil, repeats: true)
-            print(count)
-            
         } else {
-            
             self.timer?.invalidate()
             count = 0
             print(count)
-            
         }
         
     }
-    // 写真を撮る
+    
     @objc func shatter() {
-        
         let settings = AVCapturePhotoSettings()
         // フラッシュの設定
         settings.flashMode = .auto
@@ -88,56 +75,77 @@ class ViewController: UIViewController {
         
     }
     
-    // セグメントコントロール
-    @IBAction func segmented(_ sender: UISegmentedControl) {
+    @IBAction func captureSegmented(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        //単写
+        
         case 0:
-            count = 0
-            print(count)
-        //3秒おき
+            capturecount = 1
+            print(capturecount)
+            print(captureSession.sessionPreset)
+            
         case 1:
-            count = 5
-            print(count)
-        //5秒おき
+            capturecount = 2
+            print(capturecount)
+            print(captureSession.sessionPreset)
+            
         case 2:
-            count = 10
-            print(count)
+            capturecount = 3
+            print(capturecount)
+            print(captureSession.sessionPreset)
             
         default:
-            count = 0
-            print(count)
+            capturecount = 0
+            print(capturecount)
         }
     }
+    
 }
 
 //MARK: AVCapturePhotoCaptureDelegateデリゲートメソッド
-extension ViewController: AVCapturePhotoCaptureDelegate{
+extension ContinuousViewController: AVCapturePhotoCaptureDelegate{
     // 撮影した画像データが生成されたときに呼び出されるデリゲートメソッド
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {
+            print(imageArray)
             // Data型をUIImageオブジェクトに変換
-            let uiImage = UIImage(data: imageData)
-            //写真ライブラリに画像を保存
-            UIImageWriteToSavedPhotosAlbum(uiImage!, nil,nil,nil)
+            let uiImage = UIImage(data: imageData)!
+            imageArray.append(uiImage)
+        }
+        savePhoto()
+    }
+    func savePhoto() {
+        for image in imageArray {
+            // 写真ライブラリに画像を保存
+            UIImageWriteToSavedPhotosAlbum(image, nil,nil,nil)
         }
     }
 }
 
 //MARK: カメラ設定メソッド
-extension ViewController{
+extension ContinuousViewController{
+    
     // カメラの画質の設定
     func setupCaptureSession() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        
+        captureSession.beginConfiguration()
+        if captureSession.canSetSessionPreset(.low) && capturecount == 1 {
+            captureSession.sessionPreset = .low
+        } else if captureSession.canSetSessionPreset(.high) && capturecount == 2 {
+            captureSession.sessionPreset = .high
+        } else if capturecount == 3 {
+            captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        }
+        captureSession.commitConfiguration()
     }
-
+    
     // デバイスの設定
     func setupDevice() {
         // カメラデバイスのプロパティ設定
         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
         // プロパティの条件を満たしたカメラデバイスの取得
         let devices = deviceDiscoverySession.devices
-
+        
         for device in devices {
             if device.position == AVCaptureDevice.Position.back {
                 mainCamera = device
@@ -147,8 +155,38 @@ extension ViewController{
         }
         // 起動時のカメラを設定
         currentDevice = mainCamera
+        
+        // ズーム用のスライダー
+        let slider: UISlider = UISlider()
+        let sliderWidth: CGFloat = self.view.bounds.width * 0.5
+        let sliderHeight: CGFloat = 40
+        let sliderRect: CGRect = CGRect(x: (self.view.bounds.width - sliderWidth) / 2, y: self.view.bounds.height - 200, width: sliderWidth, height: sliderHeight)
+        slider.frame = sliderRect
+        slider.minimumValue = 0.0
+        slider.maximumValue = 1.0
+        slider.value = 0.0
+        slider.addTarget(self, action: #selector(self.onSliderChanged(sender:)), for: .valueChanged)
+        self.view.addSubview(slider)
+    }
+    
+    @objc func onSliderChanged(sender: UISlider) {
+        do {
+            try self.mainCamera?.lockForConfiguration()
+            self.mainCamera?.ramp(
+                toVideoZoomFactor: (self.mainCamera?.minAvailableVideoZoomFactor)! + CGFloat(sender.value) * ((self.mainCamera?.maxAvailableVideoZoomFactor)! - (self.mainCamera?.minAvailableVideoZoomFactor)!),
+                withRate: 5.0)
+            self.mainCamera?.unlockForConfiguration()
+        } catch {
+            print("Failed to change zoom.")
+        }
     }
 
+    
+    @IBAction func change() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     // 入出力データの設定
     func setupInputOutput() {
         do {
@@ -187,6 +225,4 @@ extension ViewController{
         cameraButton.layer.cornerRadius = min(cameraButton.frame.width, cameraButton.frame.height) / 2
     }
     
-    
 }
-

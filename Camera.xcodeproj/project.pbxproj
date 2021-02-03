@@ -15,6 +15,14 @@
 		D431599F25A58446003A5829 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D431599D25A58446003A5829 /* LaunchScreen.storyboard */; };
 		D43159AA25A58447003A5829 /* CameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43159A925A58447003A5829 /* CameraTests.swift */; };
 		D43159B525A58447003A5829 /* CameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43159B425A58447003A5829 /* CameraUITests.swift */; };
+		D4315A1D25BC46A3003A5829 /* InnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4315A1C25BC46A3003A5829 /* InnerViewController.swift */; };
+		D4315A2225BC5616003A5829 /* ContinuousViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4315A2125BC5616003A5829 /* ContinuousViewController.swift */; };
+		D4DCB54325C93C2400246A05 /* RedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DCB54225C93C2400246A05 /* RedViewController.swift */; };
+		D4DCB54825C9880000246A05 /* BlueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DCB54725C987FF00246A05 /* BlueViewController.swift */; };
+		D4DCB54D25C9880F00246A05 /* YellowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DCB54C25C9880F00246A05 /* YellowViewController.swift */; };
+		D4DCB55225C9881C00246A05 /* GreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DCB55125C9881C00246A05 /* GreenViewController.swift */; };
+		D4DCB55725C9882700246A05 /* PinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DCB55625C9882700246A05 /* PinkViewController.swift */; };
+		D4DCB55C25C9883B00246A05 /* PurpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DCB55B25C9883B00246A05 /* PurpleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,14 @@
 		D43159B025A58447003A5829 /* CameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43159B425A58447003A5829 /* CameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUITests.swift; sourceTree = "<group>"; };
 		D43159B625A58447003A5829 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4315A1C25BC46A3003A5829 /* InnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerViewController.swift; sourceTree = "<group>"; };
+		D4315A2125BC5616003A5829 /* ContinuousViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousViewController.swift; sourceTree = "<group>"; };
+		D4DCB54225C93C2400246A05 /* RedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedViewController.swift; sourceTree = "<group>"; };
+		D4DCB54725C987FF00246A05 /* BlueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueViewController.swift; sourceTree = "<group>"; };
+		D4DCB54C25C9880F00246A05 /* YellowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YellowViewController.swift; sourceTree = "<group>"; };
+		D4DCB55125C9881C00246A05 /* GreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenViewController.swift; sourceTree = "<group>"; };
+		D4DCB55625C9882700246A05 /* PinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinkViewController.swift; sourceTree = "<group>"; };
+		D4DCB55B25C9883B00246A05 /* PurpleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurpleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +118,14 @@
 				D431599225A58444003A5829 /* AppDelegate.swift */,
 				D431599425A58444003A5829 /* SceneDelegate.swift */,
 				D431599625A58444003A5829 /* ViewController.swift */,
+				D4315A1C25BC46A3003A5829 /* InnerViewController.swift */,
+				D4315A2125BC5616003A5829 /* ContinuousViewController.swift */,
+				D4DCB54225C93C2400246A05 /* RedViewController.swift */,
+				D4DCB54725C987FF00246A05 /* BlueViewController.swift */,
+				D4DCB54C25C9880F00246A05 /* YellowViewController.swift */,
+				D4DCB55125C9881C00246A05 /* GreenViewController.swift */,
+				D4DCB55625C9882700246A05 /* PinkViewController.swift */,
+				D4DCB55B25C9883B00246A05 /* PurpleViewController.swift */,
 				D431599825A58444003A5829 /* Main.storyboard */,
 				D431599B25A58446003A5829 /* Assets.xcassets */,
 				D431599D25A58446003A5829 /* LaunchScreen.storyboard */,
@@ -258,9 +282,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4DCB55225C9881C00246A05 /* GreenViewController.swift in Sources */,
+				D4DCB54D25C9880F00246A05 /* YellowViewController.swift in Sources */,
 				D431599725A58444003A5829 /* ViewController.swift in Sources */,
 				D431599325A58444003A5829 /* AppDelegate.swift in Sources */,
+				D4DCB55725C9882700246A05 /* PinkViewController.swift in Sources */,
+				D4315A2225BC5616003A5829 /* ContinuousViewController.swift in Sources */,
+				D4DCB55C25C9883B00246A05 /* PurpleViewController.swift in Sources */,
 				D431599525A58444003A5829 /* SceneDelegate.swift in Sources */,
+				D4DCB54325C93C2400246A05 /* RedViewController.swift in Sources */,
+				D4315A1D25BC46A3003A5829 /* InnerViewController.swift in Sources */,
+				D4DCB54825C9880000246A05 /* BlueViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,7 +478,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kakeru.geek.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -465,7 +497,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kakeru.geek.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
