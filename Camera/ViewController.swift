@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var count = 0
     var timer: Timer?
@@ -29,6 +29,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIButton!
     // セグメントコントロール
     @IBOutlet weak var SegmentedControl: UISegmentedControl!
+    
+    var imageView: UIImage!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +112,49 @@ class ViewController: UIViewController {
             print(count)
         }
     }
+    //アルバムへ移動
+    @IBAction func toImage(_ sender: Any) {
+        //アルバムを起動
+        changeImage()
+    }
+    
+    func changeImage() {
+        //アルバムを指定
+        //SourceType.camera：カメラを指定
+        //SourceType.photoLibrary：アルバムを指定
+        let sourceType:UIImagePickerController.SourceType = UIImagePickerController.SourceType.photoLibrary
+        //アルバムを立ち上げる
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
+            // インスタンスの作成
+            let cameraPicker = UIImagePickerController()
+            cameraPicker.sourceType = sourceType
+            cameraPicker.delegate = self
+            //アルバム画面を開く
+            self.present(cameraPicker, animated: true, completion: nil)
+        }
+    }
+    
+    //アルバム画面で写真を選択した時
+    func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        //imageにアルバムで選択した画像が格納される
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            //ImageViewに表示
+            self.imageView = image
+            //アルバム画面を閉じる
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        self.performSegue(withIdentifier: "toImage", sender: nil)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toImage" {
+            let imageVC = segue.destination as! ImageViewController
+            imageVC.image = imageView
+        }
+    }
+    
 }
 
 //MARK: AVCapturePhotoCaptureDelegateデリゲートメソッド
@@ -130,14 +176,14 @@ extension ViewController{
     func setupCaptureSession() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
     }
-
+    
     // デバイスの設定
     func setupDevice() {
         // カメラデバイスのプロパティ設定
         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
         // プロパティの条件を満たしたカメラデバイスの取得
         let devices = deviceDiscoverySession.devices
-
+        
         for device in devices {
             if device.position == AVCaptureDevice.Position.back {
                 mainCamera = device
@@ -147,8 +193,32 @@ extension ViewController{
         }
         // 起動時のカメラを設定
         currentDevice = mainCamera
+        
+        // ズーム用のスライダー
+        let slider: UISlider = UISlider()
+        let sliderWidth: CGFloat = self.view.bounds.width * 0.5
+        let sliderHeight: CGFloat = 40
+        let sliderRect: CGRect = CGRect(x: (self.view.bounds.width - sliderWidth) / 2, y: self.view.bounds.height - 200, width: sliderWidth, height: sliderHeight)
+        slider.frame = sliderRect
+        slider.minimumValue = 0.0
+        slider.maximumValue = 1.0
+        slider.value = 0.0
+        slider.addTarget(self, action: #selector(self.onSliderChanged(sender:)), for: .valueChanged)
+        self.view.addSubview(slider)
     }
-
+    
+    @objc func onSliderChanged(sender: UISlider) {
+        do {
+            try self.mainCamera?.lockForConfiguration()
+            self.mainCamera?.ramp(
+                toVideoZoomFactor: (self.mainCamera?.minAvailableVideoZoomFactor)! + CGFloat(sender.value) * ((self.mainCamera?.maxAvailableVideoZoomFactor)! - (self.mainCamera?.minAvailableVideoZoomFactor)!),
+                withRate: 5.0)
+            self.mainCamera?.unlockForConfiguration()
+        } catch {
+            print("Failed to change zoom.")
+        }
+    }
+    
     // 入出力データの設定
     func setupInputOutput() {
         do {

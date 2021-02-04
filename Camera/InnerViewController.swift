@@ -79,7 +79,6 @@ class InnerViewController: UIViewController {
                 self.shatter()
             }
         }
-        
     }
     
     @objc func shatter() {
