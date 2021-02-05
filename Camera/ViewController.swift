@@ -12,6 +12,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var count = 0
     var timer: Timer?
+    var flashcount = 0
     // デバイスからの入力と出力を管理するオブジェクトの作成
     var captureSession = AVCaptureSession()
     // カメラデバイスそのものを管理するオブジェクトの作成
@@ -83,7 +84,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let settings = AVCapturePhotoSettings()
         // フラッシュの設定
-        settings.flashMode = .auto
+        if flashcount == 1 {
+            settings.flashMode = .on
+        } else if flashcount == 0 {
+            settings.flashMode = .off
+        }
         // カメラの手ぶれ補正
         settings.isAutoStillImageStabilizationEnabled = true
         // 撮影された画像をdelegateメソッドで処理
@@ -156,6 +161,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
+    
+    @IBAction func flashBt(_ sender: UISwitch) {
+        if sender.isOn == true {
+            flashcount = 1
+        } else {
+            flashcount = 0
+        }
+    }
 }
 
 //MARK: AVCapturePhotoCaptureDelegateデリゲートメソッド

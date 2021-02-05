@@ -160,11 +160,8 @@ class InnerViewController: UIViewController {
     @IBAction func flashBt(_ sender: UISwitch) {
         if sender.isOn == true {
             flashcount = 1
-            AVCapturePhotoSettings().flashMode = .on
-            print(AVCapturePhotoSettings().flashMode)
         } else {
             flashcount = 0
-            AVCapturePhotoSettings().flashMode = .off
         }
     }
     
