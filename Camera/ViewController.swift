@@ -139,9 +139,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //imageにアルバムで選択した画像が格納される
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             //ImageViewに表示
-            self.imageView = image
+            imageView = image
             //アルバム画面を閉じる
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: false)
+
         }
         
         self.performSegue(withIdentifier: "toImage", sender: nil)

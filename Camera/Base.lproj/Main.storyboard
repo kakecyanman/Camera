@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Main" id="BYZ-38-t0r" customClass="ViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -119,6 +119,13 @@
                                     <action selector="cameraButton_TouchUpInside:" destination="taH-Qv-K2p" eventType="touchUpInside" id="VKc-bf-bwS"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Qw-wC-okl">
+                                <rect key="frame" x="30" y="44" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="flashBt:" destination="taH-Qv-K2p" eventType="valueChanged" id="KiA-3M-Psc"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Lsv-4u-Spi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -145,7 +152,7 @@
         <!--Blue View Controller-->
         <scene sceneID="OIa-tA-LVd">
             <objects>
-                <viewController storyboardIdentifier="toBlue" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dfg-tn-oXO" customClass="BlueViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toBlue" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dfg-tn-oXO" customClass="BlueViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0gW-5u-Sil">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,7 +179,7 @@
         <!--Red View Controller-->
         <scene sceneID="5G5-J8-zO2">
             <objects>
-                <viewController storyboardIdentifier="toRed" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4BU-RV-f8A" customClass="RedViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toRed" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4BU-RV-f8A" customClass="RedViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cr5-Yi-WW8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -256,22 +263,36 @@
         <!--Image View Controller-->
         <scene sceneID="QmV-tr-Y3X">
             <objects>
-                <viewController id="Ygd-3i-xP7" customClass="ImageViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toImage" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ygd-3i-xP7" customClass="ImageViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QxJ-gt-kmZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bCH-ZR-GOA">
-                                <rect key="frame" x="0.0" y="20" width="414" height="788"/>
+                                <rect key="frame" x="0.0" y="79" width="414" height="783"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stl-if-fnA">
+                                <rect key="frame" x="0.0" y="44" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Uky-Z6-HmM"/>
+                                    <constraint firstAttribute="width" constant="100" id="v11-Ub-q9i"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="←BACK"/>
+                                <connections>
+                                    <action selector="back:" destination="Ygd-3i-xP7" eventType="touchUpInside" id="I4j-Cb-bKi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iyN-Dz-uiV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="trailing" secondItem="iyN-Dz-uiV" secondAttribute="trailing" id="ZsF-gy-alY"/>
-                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="top" secondItem="iyN-Dz-uiV" secondAttribute="top" constant="20" id="gSQ-78-YFK"/>
-                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="leading" secondItem="iyN-Dz-uiV" secondAttribute="leading" id="gdt-j7-H6o"/>
-                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="bottom" secondItem="iyN-Dz-uiV" secondAttribute="bottom" id="kHc-fb-V0b"/>
+                            <constraint firstItem="Stl-if-fnA" firstAttribute="leading" secondItem="iyN-Dz-uiV" secondAttribute="leading" id="FkD-S5-EkD"/>
+                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="leading" secondItem="iyN-Dz-uiV" secondAttribute="leading" id="Je5-zV-hvO"/>
+                            <constraint firstItem="iyN-Dz-uiV" firstAttribute="bottom" secondItem="bCH-ZR-GOA" secondAttribute="bottom" id="K4o-0d-G8A"/>
+                            <constraint firstItem="Stl-if-fnA" firstAttribute="top" secondItem="iyN-Dz-uiV" secondAttribute="top" id="W2q-Su-TXc"/>
+                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="top" secondItem="Stl-if-fnA" secondAttribute="bottom" constant="5" id="pH8-8b-Sno"/>
+                            <constraint firstItem="bCH-ZR-GOA" firstAttribute="trailing" secondItem="iyN-Dz-uiV" secondAttribute="trailing" id="yXJ-2w-PFC"/>
                         </constraints>
                     </view>
                     <connections>
@@ -285,7 +306,7 @@
         <!--Yellow View Controller-->
         <scene sceneID="XDU-O9-UrX">
             <objects>
-                <viewController storyboardIdentifier="toYellow" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jxn-0W-PWa" customClass="YellowViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toYellow" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jxn-0W-PWa" customClass="YellowViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ajq-Ue-tIQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -312,7 +333,7 @@
         <!--Green View Controller-->
         <scene sceneID="EgC-rV-QNn">
             <objects>
-                <viewController storyboardIdentifier="toGreen" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6CK-nH-OGQ" customClass="GreenViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toGreen" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6CK-nH-OGQ" customClass="GreenViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PUP-t5-cjW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -340,7 +361,7 @@
         <!--Pink View Controller-->
         <scene sceneID="ZXg-Ma-gvx">
             <objects>
-                <viewController storyboardIdentifier="toPink" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A49-je-XxW" customClass="PinkViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toPink" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A49-je-XxW" customClass="PinkViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yx0-Or-a4A">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -367,7 +388,7 @@
         <!--Purple View Controller-->
         <scene sceneID="VSq-sb-T4O">
             <objects>
-                <viewController storyboardIdentifier="toPurple" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1ap-Uk-sBF" customClass="PurpleViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toPurple" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1ap-Uk-sBF" customClass="PurpleViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xVH-Lz-hyC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

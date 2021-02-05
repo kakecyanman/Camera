@@ -11,6 +11,7 @@ import AVFoundation
 class InnerViewController: UIViewController {
     
     var colorcount = 0
+    var flashcount = 0
 
     // デバイスからの入力と出力を管理するオブジェクトの作成
     var captureSession = AVCaptureSession()
@@ -50,33 +51,57 @@ class InnerViewController: UIViewController {
             shatter()
         } else if colorcount == 5 {
             performSegue(withIdentifier: "toRed", sender: nil)
+            UIScreen.main.brightness = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.shatter()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIScreen.main.brightness = 0.3
             }
         } else if colorcount == 10 {
             performSegue(withIdentifier: "toBlue", sender: nil)
+            UIScreen.main.brightness = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.shatter()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIScreen.main.brightness = 0.3
             }
         } else if colorcount == 15 {
             performSegue(withIdentifier: "toYellow", sender: nil)
+            UIScreen.main.brightness = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.shatter()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIScreen.main.brightness = 0.3
             }
         } else if colorcount == 20 {
             performSegue(withIdentifier: "toGreen", sender: nil)
+            UIScreen.main.brightness = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.shatter()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIScreen.main.brightness = 0.3
             }
         } else if colorcount == 25 {
             performSegue(withIdentifier: "toPink", sender: nil)
+            UIScreen.main.brightness = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.shatter()
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIScreen.main.brightness = 0.3
+            }
         } else if colorcount == 30 {
             performSegue(withIdentifier: "toPurple", sender: nil)
+            UIScreen.main.brightness = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.shatter()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIScreen.main.brightness = 0.3
             }
         }
     }
@@ -84,7 +109,11 @@ class InnerViewController: UIViewController {
     @objc func shatter() {
         let settings = AVCapturePhotoSettings()
         // フラッシュの設定
-        settings.flashMode = .auto
+        if flashcount == 1 {
+            settings.flashMode = .on
+        } else if flashcount == 0 {
+            settings.flashMode = .off
+        }
         // カメラの手ぶれ補正
         settings.isAutoStillImageStabilizationEnabled = true
         // 撮影された画像をdelegateメソッドで処理
@@ -127,6 +156,19 @@ class InnerViewController: UIViewController {
             print(colorcount)
         }
     }
+    
+    @IBAction func flashBt(_ sender: UISwitch) {
+        if sender.isOn == true {
+            flashcount = 1
+            AVCapturePhotoSettings().flashMode = .on
+            print(AVCapturePhotoSettings().flashMode)
+        } else {
+            flashcount = 0
+            AVCapturePhotoSettings().flashMode = .off
+        }
+    }
+    
+    
 }
 
 //MARK: AVCapturePhotoCaptureDelegateデリゲートメソッド
