@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -41,24 +41,27 @@
                                     <segment title="5"/>
                                 </segments>
                                 <connections>
-                                    <action selector="segmented:" destination="BYZ-38-t0r" eventType="valueChanged" id="poj-mF-oAZ"/>
+                                    <action selector="segmented:" destination="BYZ-38-t0r" eventType="valueChanged" id="JyT-MF-yBw"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIQ-L5-5qA">
-                                <rect key="frame" x="43" y="753" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="toImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dSj-KB-bIV"/>
-                                </connections>
-                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jrt-1n-HHb">
                                 <rect key="frame" x="20" y="44" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="flashBt:" destination="BYZ-38-t0r" eventType="valueChanged" id="O9W-T1-sHz"/>
+                                    <action selector="flash:" destination="BYZ-38-t0r" eventType="valueChanged" id="cq0-bx-NHD"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FV6-og-MFR">
+                                <rect key="frame" x="45" y="748" width="70" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.66269738450000004" green="0.73750609739999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="アルバム">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="toImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WJG-JN-yO5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -104,7 +107,7 @@
                                     <segment title="purple"/>
                                 </segments>
                                 <connections>
-                                    <action selector="colorSegmented:" destination="taH-Qv-K2p" eventType="valueChanged" id="xuI-uf-SmL"/>
+                                    <action selector="colorSegmented:" destination="taH-Qv-K2p" eventType="valueChanged" id="XK2-JW-Nqf"/>
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXX-d3-FSD">
@@ -119,9 +122,20 @@
                                 <rect key="frame" x="30" y="44" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="flashBt:" destination="taH-Qv-K2p" eventType="valueChanged" id="KiA-3M-Psc"/>
+                                    <action selector="flash:" destination="taH-Qv-K2p" eventType="valueChanged" id="vuA-RL-Zku"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDA-sy-E3g">
+                                <rect key="frame" x="30" y="753" width="70" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.66269738450000004" green="0.73750609739999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="アルバム">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="toImage:" destination="taH-Qv-K2p" eventType="touchUpInside" id="FjB-9Z-bI2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Lsv-4u-Spi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -139,6 +153,7 @@
                         <segue destination="6CK-nH-OGQ" kind="presentation" identifier="toGreen" id="UWz-3q-7Bi"/>
                         <segue destination="A49-je-XxW" kind="presentation" identifier="toPink" id="l30-JA-AYH"/>
                         <segue destination="1ap-Uk-sBF" kind="presentation" identifier="toPurple" id="NOA-Fk-DD3"/>
+                        <segue destination="Ygd-3i-xP7" kind="presentation" identifier="toImage" id="eKu-Ov-3Bq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OoZ-5b-TY3" sceneMemberID="firstResponder"/>
@@ -352,6 +367,9 @@
             <point key="canvasLocation" x="2258" y="753"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="eKu-Ov-3Bq"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="cancel-icon" width="256" height="256"/>
         <systemColor name="systemBackgroundColor">

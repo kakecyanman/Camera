@@ -13,6 +13,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var count = 0
     var timer: Timer?
     var flashcount = 0
+    
     // デバイスからの入力と出力を管理するオブジェクトの作成
     var captureSession = AVCaptureSession()
     // カメラデバイスそのものを管理するオブジェクトの作成
@@ -34,6 +35,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var imageView: UIImage!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptureSession()
@@ -41,9 +43,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         setupInputOutput()
         setupPreviewLayer()
         captureSession.startRunning()
-        styleCaptureButton()
         
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -51,6 +53,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     // シャッターボタンが押された時のアクション
+    //連続撮影
     @IBAction func cameraButton_TouchUpInside(_ sender: Any) {
         count = count + 1
         
@@ -78,7 +81,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
         }
         
+        
     }
+    
     // 写真を撮る
     @objc func shatter() {
         
@@ -117,10 +122,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             print(count)
         }
     }
+    
+    
     //アルバムへ移動
     @IBAction func toImage(_ sender: Any) {
         //アルバムを起動
-        changeImage()
+        self.changeImage()
     }
     
     func changeImage() {
@@ -147,12 +154,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             imageView = image
             //アルバム画面を閉じる
             self.dismiss(animated: false)
-
         }
-        
         self.performSegue(withIdentifier: "toImage", sender: nil)
         
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toImage" {
@@ -162,33 +168,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    @IBAction func flashBt(_ sender: UISwitch) {
+    @IBAction func flash(_ sender: UISwitch) {
         if sender.isOn == true {
             flashcount = 1
         } else {
             flashcount = 0
         }
     }
+
 }
 
-//MARK: AVCapturePhotoCaptureDelegateデリゲートメソッド
+
+//MARK AVCapturePhotoCaptureDelegateデリゲートメソッド
 extension ViewController: AVCapturePhotoCaptureDelegate{
     // 撮影した画像データが生成されたときに呼び出されるデリゲートメソッド
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {
             // Data型をUIImageオブジェクトに変換
             let uiImage = UIImage(data: imageData)
-            //写真ライブラリに画像を保存
+            // 写真ライブラリに画像を保存
             UIImageWriteToSavedPhotosAlbum(uiImage!, nil,nil,nil)
         }
     }
 }
 
-//MARK: カメラ設定メソッド
+//MARKカメラ設定メソッド
 extension ViewController{
     // カメラの画質の設定
     func setupCaptureSession() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        
     }
     
     // デバイスの設定
@@ -261,8 +270,8 @@ extension ViewController{
         
         self.cameraPreviewLayer?.frame = view.frame
         self.view.layer.insertSublayer(self.cameraPreviewLayer!, at: 0)
+        
     }
-    
     // ボタンのスタイルを設定
     func styleCaptureButton() {
         cameraButton.layer.borderColor = UIColor.white.cgColor
@@ -270,6 +279,7 @@ extension ViewController{
         cameraButton.clipsToBounds = true
         cameraButton.layer.cornerRadius = min(cameraButton.frame.width, cameraButton.frame.height) / 2
     }
+    
     
     
 }
